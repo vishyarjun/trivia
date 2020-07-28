@@ -124,11 +124,12 @@ def create_app(test_config=None):
     @app.route('/quizzes', methods=['POST'])
     def quizzes():
         body = request.get_json()
+        app.logger.info(body)
         prev = [data for data in body.get('previous_questions')]
         app.logger.info(prev)
         if body.get('quiz_category') is None:
             abort(400)
-        elif body.get('quiz_category').get('id') == '0':
+        elif body.get('quiz_category').get('id') == 0:
             next_ques = Question.query.filter(
               Question.id.notin_(prev)).order_by(func.random()).first()
         else:

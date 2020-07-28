@@ -1,0 +1,8 @@
+/frontend/node_modules
+__pycache__
+
+
+# OS #
+Thumbs.db
+.Trashes
+.Spotlight-V100

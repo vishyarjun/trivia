@@ -176,7 +176,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_post_quizzes_success(self): #14
         req_data = {
             'previous_questions':[1, 2, 3],
-            'quiz_category':{'id':'0'},
+            'quiz_category':{'id':0},
         }
         result = self.client().post('/quizzes',json=req_data)
         result_data = json.loads(result.data)
@@ -204,6 +204,17 @@ class TriviaTestCase(unittest.TestCase):
         result_data = json.loads(result.data)
         self.assertEqual(result.status_code,400)
         self.assertTrue(result_data.get('question') is None)
+
+    def test_post_quizzes_success_3(self): #17
+        req_data = {
+            'previous_questions':[],
+            'quiz_category':{'id':0},
+        }
+        result = self.client().post('/quizzes',json=req_data)
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code,200)
+        self.assertTrue(result_data['question'] is not None)
+        self.assertTrue(result_data['question']['id'] not in req_data['previous_questions'])
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
