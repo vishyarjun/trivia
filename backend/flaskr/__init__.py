@@ -79,7 +79,7 @@ def create_app(test_config=None):
                   'current_category': None
                 })
             else:
-                if content.get('question') is None or content.get('answer') is None or content.get('category') is None or content.get('difficulty') is None:
+                if not(content.get('question') and content.get('answer') and content.get('category') and content.get('difficulty')):
                     abort(400)
                 question = Question(
                     question=content['question'],

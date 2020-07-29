@@ -216,6 +216,20 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(result_data['question'] is not None)
         self.assertTrue(result_data['question']['id'] not in req_data['previous_questions'])
 
+    def test_post_questions_error_3(self): #18
+        json_data = {
+            'question': '',
+            'answer': '',
+            'difficulty': '',
+            'category': ''
+        }
+
+        result = self.client().post('/questions', json=json_data)
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertTrue(result_data.get('created') is None)
+        self.assertEqual(result_data.get('success'), False)
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
